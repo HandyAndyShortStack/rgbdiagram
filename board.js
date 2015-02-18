@@ -61,6 +61,22 @@ Board.prototype.isEquivalentTo = function(board) {
   }
   return false;
 };
+Board.prototype.isSolved = function() {
+  var self = this;
+  var rowsSolved = true;
+  var columnsSolved = true;
+  for (var i = 0; i < rows.length && rowsSolved; i += 1) {
+    rowsSolved = !!rows[i].reduce(function(accum, current) {
+      return self.squares[accum] === self.squares[current] && current;
+    });
+  }
+  for (var i = 0; i < columns.length && columnsSolved; i += 1) {
+    columnsSolved = !!columns[i].reduce(function(accum, current) {
+      return self.squares[accum] === self.squares[current] && current;
+    });
+  }
+  return rowsSolved || columnsSolved;
+};
 
 var colorIndexPermutations = [];
 (function() {
@@ -71,3 +87,14 @@ var colorIndexPermutations = [];
     notDone = nextPermutation(a);
   }
 })();
+
+var rows = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8]
+];
+var columns = [
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8]
+];
