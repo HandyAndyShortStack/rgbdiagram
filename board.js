@@ -13,7 +13,29 @@ Board.prototype.rotate = function() {
   return new Board(squares);
 };
 Board.prototype.rotations = function() {
-  return [this, this.rotate(), this.rotate().rotate(), this.rotate().rotate().rotate()];
+  return [
+    this,
+    this.rotate(),
+    this.rotate().rotate(),
+    this.rotate().rotate().rotate()
+  ];
+};
+Board.prototype.reflections = function() {
+  var self = this;
+  var arr = [];
+  var indexArrays = [
+    [6, 7, 8, 3, 4, 5, 0, 1, 2],
+    [2, 1, 0, 5, 4, 3, 8, 7, 6],
+    [8, 5, 2, 7, 4, 1, 6, 3, 0],
+    [0, 3, 6, 1, 4, 7, 2, 5, 8]
+  ]
+  for (var i = 0; i < indexArrays.length; i += 1) {
+    var indicies = indexArrays[i];
+    arr.push(new Board(indicies.map(function(index) {
+      return self.squares[index];
+    })));
+  }
+  return arr;
 };
 Board.prototype.colorway = function(colors) {
   var squares = this.squares.map(function(square) {
@@ -34,7 +56,7 @@ Board.prototype.colorways = function() {
   });
 };
 Board.prototype.allEquivalencies = function() {
-  return Array.prototype.concat.apply([], this.rotations().map(function(board) {
+  return Array.prototype.concat.apply([], this.rotations().concat(this.reflections()).map(function(board) {
     return board.colorways();
   }));
 };
