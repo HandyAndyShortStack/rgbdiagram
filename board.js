@@ -43,10 +43,9 @@ Board.prototype.up = function() {
 }
 Board.prototype.rotate = function() {
   var self = this;
-  var squares = [6, 3, 0, 7, 4, 1, 8, 5, 2].map(function(index) {
+  return new Board([6, 3, 0, 7, 4, 1, 8, 5, 2].map(function(index) {
     return self.squares[index];
-  });
-  return new Board(squares);
+  }));
 };
 Board.prototype.rotations = function() {
   return [
