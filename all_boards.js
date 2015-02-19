@@ -7,7 +7,8 @@ module.exports = {
   getUnique: getUniqueEntry,
   equivalencyHash: equivalencyHash,
   reverseEquivalencyHash: reverseEquivalencyHash,
-  uniqueBoardHash: uniqueBoardHash
+  uniqueBoardHash: uniqueBoardHash,
+  graph: graph
 };
 
 var cache = {};
@@ -105,4 +106,13 @@ function uniqueBoardHash() {
 
 function getUniqueEntry(board) {
   return uniqueBoardHash()[reverseEquivalencyHash()[board.toString()]]
+}
+
+function graph() {
+  var _uniqueBoards = uniqueBoards();
+  var hsh = {};
+  hsh.nodes = _uniqueBoards.map(function(board) {
+    return {name: board.toString()};
+  });
+  return hsh;
 }

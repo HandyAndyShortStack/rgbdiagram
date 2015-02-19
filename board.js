@@ -13,7 +13,7 @@ Board.prototype.rotate = function() {
   return new Board(squares);
 };
 Board.prototype.rotations = function() {
-  return [this, this.rotate(), this.rotate().rotate(), this.rotate().rotate()];
+  return [this, this.rotate(), this.rotate().rotate(), this.rotate().rotate().rotate()];
 };
 Board.prototype.colorway = function(colors) {
   var squares = this.squares.map(function(square) {
