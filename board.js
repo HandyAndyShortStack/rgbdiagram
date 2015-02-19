@@ -41,6 +41,12 @@ Board.prototype.up = function() {
     return self.squares[index];
   }));
 }
+Board.prototype.allMoves = function() {
+  var self = this;
+  return ['cw', 'ccw', 'right', 'down', 'left', 'up'].map(function(key) {
+    return self[key]();
+  });
+}
 Board.prototype.rotate = function() {
   var self = this;
   return new Board([6, 3, 0, 7, 4, 1, 8, 5, 2].map(function(index) {

@@ -112,7 +112,37 @@ function graph() {
   var _uniqueBoards = uniqueBoards();
   var hsh = {};
   hsh.nodes = _uniqueBoards.map(function(board) {
-    return {name: board.toString()};
+    return {
+      name: board.toString(),
+      squares: board.squares.map(function(square) {
+        return getColor(square);
+      })
+    };
+  });
+  hsh.links = [];
+  var edgeHash = {}
+  _uniqueBoards.forEach(function(uniqueBoard) {
+    uniqueBoard.allMoves().forEach(function(move) {
+      var uniqueTarget = getUniqueEntry(move);
+      var edgeHashKey = uniqueBoard.toString() + uniqueTarget.toString();
+      if (!edgeHash[edgeHashKey] && uniqueBoard !== uniqueTarget) {
+        edgeHash[edgeHashKey] = true;
+        hsh.links.push({
+          source: _uniqueBoards.indexOf(uniqueBoard),
+          target: _uniqueBoards.indexOf(uniqueTarget)
+        });
+      }
+    });
   });
   return hsh;
+}
+
+function getColor(abbreviation) {
+  if (abbreviation === 'R') {
+    return 'red';
+  } else if (abbreviation === 'G') {
+    return 'green';
+  } else if (abbreviation === 'B') {
+    return 'blue';
+  }
 }
