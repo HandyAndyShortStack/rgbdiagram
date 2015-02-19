@@ -1,7 +1,7 @@
 var nodeStatic = require('node-static');
 var cowsay = require('cowsay');
 
-var file = new nodeStatic.Server('./build');
+var file = new nodeStatic.Server('.');
 var port = process.env.PORT || 4010;
 
 require('http').createServer(function (request, response) {
