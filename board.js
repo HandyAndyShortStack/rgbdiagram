@@ -5,6 +5,42 @@ module.exports = Board;
 function Board(squares) {
   this.squares = squares;
 }
+Board.prototype.cw = function() {
+  var self = this;
+  return new Board([3, 0, 1, 6, 4, 2, 7, 8, 5].map(function(index) {
+    return self.squares[index];
+  }));
+}
+Board.prototype.ccw = function() {
+  var self = this;
+  return new Board([1, 2, 5, 0, 4, 8, 3, 6, 7].map(function(index) {
+    return self.squares[index];
+  }));
+}
+Board.prototype.right = function() {
+  var self = this;
+  return new Board([2, 0, 1, 5, 3, 4, 8, 6, 7].map(function(index) {
+    return self.squares[index];
+  }));
+}
+Board.prototype.down = function() {
+  var self = this;
+  return new Board([6, 7, 8, 0, 1, 2, 3, 4, 5].map(function(index) {
+    return self.squares[index];
+  }));
+}
+Board.prototype.left = function() {
+  var self = this;
+  return new Board([1, 2, 0, 4, 5, 3, 7, 8, 6].map(function(index) {
+    return self.squares[index];
+  }));
+}
+Board.prototype.up = function() {
+  var self = this;
+  return new Board([3, 4, 5, 6, 7, 8, 0, 1, 2].map(function(index) {
+    return self.squares[index];
+  }));
+}
 Board.prototype.rotate = function() {
   var self = this;
   var squares = [6, 3, 0, 7, 4, 1, 8, 5, 2].map(function(index) {
