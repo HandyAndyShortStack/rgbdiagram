@@ -1,0 +1,12 @@
+{
+  "name": "rgb_permutations",
+  "version": "0.0.1",
+  "dependencies": {
+    "node-static": "latest",
+    "cowsay": "latest"
+  },
+  "scripts": {
+    "server": "node server.js"
+  },
+  "author": "Andy Short"
+}
