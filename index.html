@@ -112,6 +112,15 @@ d3.json("graph.json", function(error, json) {
         return d.squares[8];
       });
 
+  diagram.append("text")
+      .attr("x", 3)
+      .attr("y", 24)
+      .text(function(d) { return d.distance; })
+      .style('font-size', '2em')
+      .style('fill', 'yellow')
+      .style('stroke', 'black')
+      .style('stroke-width', 1);
+
   force.on("tick", function() {
     link.attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })

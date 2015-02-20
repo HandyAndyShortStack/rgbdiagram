@@ -8,7 +8,8 @@ module.exports = {
   equivalencyHash: equivalencyHash,
   reverseEquivalencyHash: reverseEquivalencyHash,
   uniqueBoardHash: uniqueBoardHash,
-  graph: graph
+  graph: graph,
+  getDistances: getDistances
 };
 
 var cache = {};
@@ -109,6 +110,7 @@ function getUniqueEntry(board) {
 }
 
 function graph() {
+  getDistances();
   var _uniqueBoards = uniqueBoards();
   var hsh = {};
   hsh.nodes = _uniqueBoards.map(function(board) {
@@ -116,7 +118,8 @@ function graph() {
       name: board.toString(),
       squares: board.squares.map(function(square) {
         return getColor(square);
-      })
+      }),
+      distance: board.distance
     };
   });
   hsh.links = [];
@@ -135,6 +138,37 @@ function graph() {
     });
   });
   return hsh;
+}
+
+var gotDistances = false;
+function getDistances() {
+  if (gotDistances) {
+    return;
+  }
+  var _uniqueBoards = uniqueBoards().slice(0);
+  _uniqueBoards.forEach(function(board) {
+    board.distance = Infinity;
+  });
+  _uniqueBoards[0].distance = 0;
+  function traverse(current) {
+    current.allMoves().forEach(function(board) {
+      var neighbor = getUniqueEntry(board);
+      var tentativeDistance = current.distance + 1;
+      if (!neighbor.visited && tentativeDistance < neighbor.distance) {
+        neighbor.distance = tentativeDistance;
+      }
+    });
+    current.visited = true;
+    _uniqueBoards.splice(0, 1);
+    _uniqueBoards.sort(function(a, b) {
+      return a.distance - b.distance;
+    });
+    if (_uniqueBoards.length > 0) {
+      traverse(_uniqueBoards[0]);
+    }
+  }
+  traverse(_uniqueBoards[0]);
+  gotDistances = true;
 }
 
 function getColor(abbreviation) {
